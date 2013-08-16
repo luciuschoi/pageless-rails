@@ -1,6 +1,6 @@
 # Pageless::Rails
 
-TODO: Write a gem description
+This gem was built for the easy installation of Pageless jquery plugin in Rails projects. Finally, an image (load.gif) and a javascript file (jquery.pageless.js) was packaged into a gem.
 
 ## Installation
 
@@ -18,7 +18,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+in Gemfile,
+
+```
+gem 'will_paginate'
+gem 'pageless-rails', github: 'rorlab/pageless-rails'
+```
+
+in app/helpers/application_helper.rb,
+
+```
+def pageless(total_pages, url=nil, container=nil)
+  opts = {
+      :totalPages => total_pages,
+      :url        => url,
+      :loaderMsg  => 'Loading more pages...',
+      :loaderImage => image_path('load.gif')
+  }
+
+  container && opts[:container] ||= container
+
+  javascript_tag("$('#results').pageless(#{opts.to_json});")
+end
+```
+
+in a view template file,
+
+```
+<div id="results">
+  <%= render @posts %>
+</div>
+<%= will_paginate @posts %>
+<%= pageless(@posts.total_pages, posts_path, '#results') %>
+```
+
+That't it.
 
 ## Contributing
 
