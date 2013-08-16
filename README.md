@@ -2,6 +2,10 @@
 
 This gem was built for the easy installation of Pageless jquery plugin in Rails projects. Finally, an image (load.gif) and a javascript file (jquery.pageless.js) was packaged into a gem.
 
+Demo Application:
+
+https://github.com/jney/jquery.pageless.demo
+
 ## Installation
 
 Add this line to your application's Gemfile:
