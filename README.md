@@ -6,6 +6,10 @@ Demo Application:
 
 https://github.com/jney/jquery.pageless.demo
 
+Documentation in Korean:
+
+http://happyrails.rorlab.org/ko/posts/62
+
 ## Installation
 
 Add this line to your application's Gemfile:
