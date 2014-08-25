@@ -59,16 +59,7 @@
   var namespace = '.pageless';
   var SCROLL = 'scroll' + namespace;
   var RESIZE = 'resize' + namespace;
-  var settings = {
-    container: window,
-    currentPage: 1,
-    distance: 100,
-    pagination: '.pagination',
-    params: {},
-    url: location.href,
-    loaderImage: "/images/load.gif",
-    method: 'get'
-  };
+  var settings = {};
   var container;
   var $container;
 
@@ -81,6 +72,8 @@
   };
 
   $.pagelessReset = function () {
+    var inited = settings.inited;
+
     settings = {
       container: window,
       currentPage: 1,
@@ -91,35 +84,43 @@
       loaderImage: "/images/load.gif",
       method: 'get'
     };
-    stopListener();
+
+    container = settings.container;
+    $container = $(container);
+
+    if (inited) {
+      stopListener();
+    }
+
       // if there is a afterStopListener callback we call it
     if (settings.end) {
       settings.end.call();
     }
   };
 
+  $.pagelessCurrentPage = function () {
+    return settingOrFunc('currentPage');
+  };
+
   var loaderHtml = function () {
     return settings.loaderHtml ||
       '<div id="pageless-loader" style="display:none;text-align:center;width:100%;">' +
-      '<div class="msg" style="color:#e9e9e9;font-size:1em"></div>' +
+      '<div class="msg" style="color:#e9e9e9;font-size:2em"></div>' +
       '<img src="' + settings.loaderImage + '" alt="loading more results" style="margin:10px auto" />' +
       '</div>';
   };
 
   // settings params: totalPages
   function init(opts) {
-    if (settings.inited) {
-      return;
-    }
+    $.pagelessReset();
 
-    settings.inited = true;
+    if (!settings.inited) {
+      settings.inited = true;
+    }
 
     if (opts) {
       $.extend(settings, opts);
     }
-
-    container = settings.container;
-    $container = $(container);
 
     // for accessibility we can keep pagination links
     // but since we have javascript enabled we remove pagination links
@@ -180,7 +181,9 @@
   }
 
   function stopListener() {
-    $container.unbind(namespace);
+    if ($container) {
+      $container.unbind(namespace);
+    }
   }
 
   // * bind a scroll event
