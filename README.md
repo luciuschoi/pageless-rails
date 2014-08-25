@@ -2,6 +2,8 @@
 
 This gem was built for the easy installation of Pageless jquery plugin in Rails projects. Finally, an image (load.gif) and a javascript file (jquery.pageless.js) was packaged into a gem.
 
+Since version 0.0.3, turbolinks is supported.
+
 Demo Application:
 
 https://github.com/jney/jquery.pageless.demo
@@ -46,7 +48,7 @@ def pageless(total_pages, url=nil, container=nil)
 
   container && opts[:container] ||= container
 
-  javascript_tag("$('#results').pageless(#{opts.to_json});")
+  javascript_tag("$('#{container}').pageless(#{opts.to_json});")
 end
 ```
 
